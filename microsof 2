@@ -1,0 +1,32 @@
+using Word = Microsoft.Office.Interop.Word;
+
+class Program
+{
+    static void Main()
+    {
+        // Create a new Word application
+        Word.Application wordApp = new Word.Application();
+
+        // Create a new document
+        Word.Document doc = wordApp.Documents.Add();
+
+        // Add content to the document
+        Word.Paragraph paragraph1 = doc.Content.Paragraphs.Add();
+        paragraph1.Range.Text = "Hello, this is a sample Word document.";
+
+        Word.Paragraph paragraph2 = doc.Content.Paragraphs.Add();
+        paragraph2.Range.Text = "You can customize and extend this code for your needs.";
+
+        // Save the document
+        string filePath = @"C:\Path\To\Your\Document.docx";
+        doc.SaveAs2(filePath);
+        
+        // Close the document and the Word application
+        doc.Close();
+        wordApp.Quit();
+
+        // Release COM objects to avoid memory leaks
+        System.Runtime.InteropServices.Marshal.ReleaseComObject(doc);
+        System.Runtime.InteropServices.Marshal.ReleaseComObject(wordApp);
+    }
+}
